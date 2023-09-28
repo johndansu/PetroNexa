@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file for styling -->
+</head>
+
+<body>
+    <header>
+        <div class="logo">PetroNexa</div>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">User Management</a></li>
+                <li><a href="#">Station Management</a></li>
+                <!-- Add other navigation links here -->
+            </ul>
+        </nav>
+    </header>
+
+    <section class="station-management">
+        <h1>Station Management</h1>
+
+        <!-- Add Station Form -->
+        <div class="add-station-form">
+            <h2>Add New Station</h2>
+            <form>
+                <label for="station-name">Station Name:</label>
+                <input type="text" id="station-name" name="station-name" required>
+
+                <label for="location">Location(City):</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="location">Location(Country):</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="station-image">Station Image:</label>
+                <input type="file" id="station-image" name="station-image" accept="image/*">
+
+                <label for="rating">Rating:</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" required>
+
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" step="0.01" required>
+
+                <label for="customer-service">Customer Service:</label>
+                <select id="customer-service" name="customer-service" required>
+                    <option value="excellent">Excellent</option>
+                    <option value="good">Good</option>
+                    <option value="average">Average</option>
+                    <option value="poor">Poor</option>
+                </select>
+
+                <button type="submit">Add Station</button>
+            </form>
+        </div>
+
+        <!-- List of Stations -->
+        <div class="container">
+            <div class="station-list row">
+                <h2>List of Stations</h2>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Station Name 1</h5>
+                            <p class="card-text">Location: City 1, Country 1</p>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Station Name 2</h5>
+                            <p class="card-text">Location: City 2, Country 2</p>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Station Name 3</h5>
+                            <p class="card-text">Location: City 3, Country 3</p>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Station Name 4</h5>
+                            <p class="card-text">Location: City 4, Country 4</p>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Station Name 5</h5>
+                            <p class="card-text">Location: City 5, Country 5</p>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Station Name 6</h5>
+                            <p class="card-text">Location: City 6, Country 6</p>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 PetroNexa. All rights reserved.</p>
+        <!-- <button id="logout-button">Logout</button> -->
+    </footer>
+
+    <!-- Add your scripts here -->
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+{% load static %}
+ <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'frontend/css/main.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Fuel Finder</title>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand logo" href="{% url 'petronexa_app:homepage' %}">PetroNexa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto nav">
+              <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:fuelfinder' %}">Find Stations</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:addstation' %}">Add Stations</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:contact' %}">Contact</a></li>
+          </ul>
+          <ul class="navbar-nav auth-links">
+              <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:login' %}">Login</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:signup' %}">Signup</a></li>
+          </ul>
+        </div>
+      </nav>
+      <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'frontend/img/breadcrumb.jpg' %}');">
+          <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>Fuel Finder</h2>
+            <ol>
+              <li><a href="{% url 'petronexa_app:homepage' %}">Home</a></li>
+              <li>Fuel Finder</li>
+            </ol>
+
+          </div>
+        </div><!-- End Breadcrumbs -->
+
+
+    </header>
+    <br>
+    <section id="fuel-finder blog" class="fuel-finder blog">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row">
+          <div class="col-lg-2">
+            <div class="filter-sidebar">
+              <h2>Search</h2>
+              <form method="GET" id="filter-form" action="{% url 'petronexa_app:fuelfinder' %}">
+                <div class="form-group">
+                  <label for="search">Name:</label>
+                  <input type="text" id="search" name="search" class="form-control" placeholder="Search by name..." value="{{ request.GET.search }}">
+                </div>
+                <div class="form-group">
+                  <label for="rating">Rating:</label>
+                  <select id="rating" name="rating" class="form-control">
+                    <option value="0">Any</option>
+                    <option value="1">1 Star</option>
+                    <option value="2">2 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="5">5 Stars</option>
+                    <!-- Add other rating options -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="price">Price:</label>
+                  <input type="text" id="price" name="price" class="form-control" placeholder="Enter price..." value="{{ request.GET.price }}">
+                </div>
+                <div class="form-group">
+                  <label for="customer_service">Customer Service:</label>
+                  <select id="customer-service" name="customer_service" class="form-control">
+                    <option value="0">Any</option>
+                    <option value="1">Poor</option>
+                    <option value="2">Average</option>
+                    <option value="3">Good</option>
+                    <option value="4">Excellent</option>
+                    <!-- Add other customer service options -->
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary" id="search">Apply</button>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-1">
+
+          </div>
+          <div class="col-lg-9">
+            <div class="row gy-6 posts-list">
+              {% for p in random %}
+                  <div class="col-xl-4 col-md-6">
+                      <div class="post-item position-relative h-100">
+          
+                          <div class="post-img position-relative overflow-hidden" style="height=48%;">
+                          <img src="{{ p.featured_image.url }}" class="img-fluid" alt style="height: 263px;">
+                          <span class="post-date">{{ p.published_date }}</span>
+                          </div>
+          
+                          <div class="post-content d-flex flex-column">
+          
+                              <h3 class="post-title gas-station-name">{{p.title}}</h3>
+              
+                              <div class="meta d-flex align-items-center">
+                                  <div class="d-flex align-items-center">
+                                  <i class="bi bi-person"></i> <span class="ps-2">{{p.author}}</span>
+                                  </div>
+                                  <span class="px-3 text-black-50">/</span>
+                                  <div class="d-flex align-items-center">
+                                  <i class="bi bi-folder2"></i> <span class="ps-2">{{p.rating}}</span>
+                                  </div>
+                              </div>
+              
+                              <p class="post-test">{{ p.short_content }}</p>
+              
+                              <hr>
+              
+                              <a href="{% url 'petronexa_app:blog' p.id %}" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+          
+                          </div>
+                          <hr> 
+                      </div>
+                  </div>  
+                  {% empty %}
+                  <p>No fuel stations found.</p>
+              {% endfor%}
+            </div><!-- End post list item --> 
+          </div>         
+        </div>
+      </div>
+    </section>
+    </main>
+
+
+    <footer class="footer mt-5">
+      <div class="container text-center">
+        <p>&copy; 2023 PetroNexa. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const filterForm = document.getElementById('filter-form');
+        const resultsContainer = document.getElementById('results');
+    
+        filterForm.addEventListener('submit', function (e) {
+          e.preventDefault(); // Prevent form submission
+          
+          // Get selected filter values
+          const searchQuery = document.getElementById('search').value;
+          const rating = document.getElementById('rating').value;
+          const price = document.getElementById('price').value;
+          const customerService = document.getElementById('customer-service').value;
+    
+          // Create a query string for filtering
+          const queryString = `?search=${searchQuery}&rating=${rating}&price=${price}&customer_service=${customerService}`;
+    
+          // Fetch filtered results using AJAX
+          fetch(`/fuelfinder/${queryString}`)
+            .then(response => response.json())
+            .then(data => {
+              // Update the results container with new data
+              displayGasStations(data.fuel_stations);
+            })
+            .catch(error => {
+              console.error('Error fetching data:', error);
+            });
+        });
+    
+        // Function to display gas stations in the results section
+        function displayGasStations(stations) {
+          resultsContainer.innerHTML = '';
+    
+          if (stations.length === 0) {
+            resultsContainer.innerHTML = '<p>No results found.</p>';
+            return;
+          }
+    
+          stations.forEach(station => {
+            const stationCard = document.createElement('div');
+            stationCard.classList.add('station-card');
+    
+            stationCard.innerHTML = `
+              <h3>${station.title}</h3>
+              <p>Rating: ${station.rating}</p>
+              <p>Customer Service: ${station.customer_service}</p>
+              <p>Price: ${station.price}</p>
+              <!-- Add other station details as needed -->
+            `;
+    
+            resultsContainer.appendChild(stationCard);
+          });
+        }
+      });
+    </script>
+
+    <script src="{% static 'frontend/js/script.js' %}"></script>
+    <script src="{% static 'frontend/js/fuelfinder.js' %}"></script>
+  </body>
+
+  </html>

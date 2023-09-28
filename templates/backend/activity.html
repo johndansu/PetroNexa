@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file for styling -->
+</head>
+<body>
+    <header>
+        <div class="logo">PetroNexa</div>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">User Management</a></li>
+                <li><a href="#">Station Management</a></li>
+                <!-- Add other navigation links here -->
+            </ul>
+        </nav>
+    </header>
+
+    <section class="user-activity-logs">
+        <h1>User Activity Logs</h1>
+        
+        <!-- Filter and Search Options -->
+        <div class="filter-options">
+            <label for="user-filter">Filter by User:</label>
+            <select id="user-filter">
+                <option value="">All Users</option>
+                <option value="user1">User 1</option>
+                <option value="user2">User 2</option>
+                <!-- Add more user options if needed -->
+            </select>
+        
+            <label for="date-from">From:</label>
+            <input type="date" id="date-from">
+        
+            <label for="date-to">To:</label>
+            <input type="date" id="date-to">
+        
+            <button id="apply-filters">Apply Filters</button>
+        
+            <input type="text" id="search-activity" placeholder="Search Activity Logs">
+        </div>
+
+        <!-- User Activity Logs Table -->
+        <div class="activity-logs-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Date & Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Populate user activity logs dynamically from your database -->
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Logged in</td>
+                        <td>2023-08-15 09:30 AM</td>
+                    </tr>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Logged in</td>
+                        <td>2023-08-15 09:30 AM</td>
+                    </tr>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Logged in</td>
+                        <td>2023-08-15 09:30 AM</td>
+                    </tr>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Logged in</td>
+                        <td>2023-08-15 09:30 AM</td>
+                    </tr>
+                    <!-- Repeat for each log entry -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 PetroNexa. All rights reserved.</p>
+        <!-- <button id="logout-button">Logout</button> -->
+    </footer>
+
+    <!-- Add your scripts here -->
+</body>
+</html>

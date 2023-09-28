@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+ <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'frontend/css/main.css' %}">
+        <title>Contact Us</title>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand logo" href="{% url 'petronexa_app:homepage' %}">PetroNexa</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto nav">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:fuelfinder' %}">Find Stations</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:addstation' %}">Add Stations</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:contact' %}">Contact</a></li>
+                    </ul>
+                    <ul class="navbar-nav auth-links">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:signup' %}">Signup</a></li>
+                    </ul>
+                </div>
+        </nav>
+        <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'frontend/img/breadcrumb.jpg' %}');">
+            <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+        
+            <h2>Blog Details</h2>
+            <ol>
+                <li><a href="{% url 'petronexa_app:homepage' %}">Home</a></li>
+                <li>Blog Details</li>
+            </ol>
+        
+            </div>
+        </div><!-- End Breadcrumbs -->
+        {%if details %}
+            <div class="blog-details">
+            <div class="blog-header">
+                <h1 class="blog-title">{{ details.title }}</h1>
+                <img class="blog-image" src="{{ details.featured_image.url }}" alt="Blog Image">
+            </div>
+    
+            <div class="blog-content">
+                <h2>Introduction</h2>
+                <p>{{ details.content }}</p>
+        
+                <h2>Map Location</h2>
+                <iframe src="{{ details.map }}" width="800" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    
+                <h2>Customer Service Treatment</h2>
+                <p>They have a {{ details.customer_service_rating }} Customer Ratings.</p>
+    
+                <h2>Price</h2>
+                <p>The price of fuel at this station is {{ details.price }} Naira per litre</p>
+        {% endif %}
+        {% for comments in comments %}
+                <!-- Ratings Section -->
+                <section class="ratings">
+                    <h2>Customer Ratings and Reviews</h2>
+                    <div class="rating-summary">
+                        <div class="average-rating">
+                            <h3>Average Rating</h3>
+                            <div class="rating-stars">
+                                <!-- Display average rating stars (you can use your own CSS or an icon library) -->
+                                <span class="star filled"></span>
+                                <span class="star filled"></span>
+                                <span class="star filled"></span>
+                                <span class="star filled"></span>
+                                <span class="star"></span>
+                            </div>
+                            <p class="rating-value">{{ details.rating }}</p>
+                        </div>
+        
+        
+                         <div class="total-reviews">
+                            <h3>Total Reviews</h3>
+                            <p class="review-count">{{ comments.review_count }}</p>
+                        </div>
+                    </div>
+                    <div class="user-review">
+                        <div class="user-info">
+                            <img src="{{ comments.author.profile_image.url }}" alt="User Avatar">
+                            <span class="user-name">{{ comments.author.username }}</span>
+                        </div>
+                        <div class="user-rating">
+                            <span class="user-rating-stars" style="width: 80%;"></span> <!-- Adjust width based on user rating -->
+                            <span class="rating-value">{{ comments.rating }}</span>
+                        </div>
+                        <p class="review-text">{{ comments.content }}</p>
+                        <p class="review-date">Posted on {{ comments.created_date }}</p>
+                    </div>  
+        {% endfor %}                  
+                    <!-- More user reviews go here -->
+                    <div class="write-review">
+                        <h3>Write a Review</h3>
+                        <p>Share your experience with us and help others make informed decisions.</p>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button class= "btn" type"submit">Submit Review</button>
+                        </form>
+                        {% if form.errors %}
+                            <div class"alert alert-danger">
+                                <strong>Error:</strong> Please correct the errors below
+                                {{ form.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+                       
+        
+        
+        <footer class="footer mt-5">
+            <div class="container text-center bottom">
+              <p>&copy; 2023 PetroNexa. All rights reserved.</p>
+            </div>
+        </footer>
+        <script src="{% static 'frontend/js/script.js' %}"></script> <!-- Link to your external JavaScript file -->
+    </body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Price Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">PetroNexa</div>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">User Management</a></li>
+                <li><a href="#">Station Management</a></li>
+                <!-- Add other navigation links here -->
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="fuel-price-management">
+        <h1>Fuel Price Management</h1>
+        
+        <div class="filters">
+            <select id="station-selection">
+                <option value="">Select Station</option>
+                <!-- Populate station options dynamically from your database -->
+            </select>
+            <select id="fuel-type-selection">
+                <option value="">Select Fuel Type</option>
+                <option value="petrol">Petrol</option>
+                <option value="diesel">Diesel</option>
+                <!-- Add other fuel types if needed -->
+            </select>
+            <input type="date" id="from-date" placeholder="From Date">
+            <input type="date" id="to-date" placeholder="To Date">
+            <button id="search-button">Search</button>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Station Name</th>
+                    <th>Fuel Type</th>
+                    <th>Date</th>
+                    <th>Price per Liter/Gallon</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populate table rows dynamically from your database -->
+            </tbody>
+        </table>
+        
+        <div class="add-price-entry">
+            <h2>Add New Price Entry</h2>
+            <select id="add-station-selection">
+                <option value="">Select Station</option>
+                <!-- Populate station options dynamically from your database -->
+            </select>
+            <select id="add-fuel-type">
+                <option value="">Select Fuel Type</option>
+                <option value="petrol">Petrol</option>
+                <option value="diesel">Diesel</option>
+                <!-- Add other fuel types if needed -->
+            </select>
+            <input type="text" id="price-input" placeholder="Price per Liter/Gallon">
+            <input type="date" id="effective-date" placeholder="Effective Date">
+            <button id="save-button">Save</button>
+        </div>
+        
+        <div class="pagination">
+            <!-- Pagination controls go here -->
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2023 PetroNexa. All rights reserved.</p>
+        <!-- <button id="logout-button">Logout</button> -->
+    </footer>
+</body>
+</html>
