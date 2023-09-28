@@ -1,0 +1,623 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* user management page */
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.user-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+/* .user-details h2 {
+    font-size: 1.5rem;
+} */
+
+
+.user-posts {
+    padding: 1rem;
+}
+
+.user-posts ul {
+    list-style: none;
+    padding: 0;
+}
+
+.user-posts li {
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.user-profile h1{
+    text-align: center;
+}
+
+.user-profile h2{
+    text-align: center;
+}
+/* footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem;
+} */
+
+/* Center content in the middle of the page */
+.table-responsive {
+    margin-top: 20px;
+}
+
+/* Style for the charts */
+#activityChart, #pieChart {
+    width: 100%;
+    height: auto;
+}
+
+/* Customize the sidebar */
+.sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+/* Example: Style table rows on hover */
+.table tbody tr:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+/* Styles for Activity Graph */
+#activity-graph-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for User Activity Pie Chart */
+#user-activity-pie-chart-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the canvas elements */
+canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  /* Add some spacing between the charts */
+  #user-activity-chart {
+    margin-top: 20px;
+  }
+  
+
+ /* post page */
+.post-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.post-form h2 {
+    font-size: 1.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+textarea {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Style for the Rating input */
+label[for="postRating"],
+input#postRating {
+    display: block;
+    margin-top: 10px;
+}
+
+/* Style for the Price input */
+label[for="postPrice"],
+input#postPrice {
+    display: block;
+    margin-top: 10px;
+}
+
+/* Style for the Customer Service dropdown */
+label[for="postCustomerService"],
+select#postCustomerService {
+    display: block;
+    margin-top: 10px;
+}
+
+
+button[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* Reset some default styles for consistency */
+body, h1, form {
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+form {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.nav-link {
+    color: black;
+}
+
+.navbar-brand {
+    text-align: center;
+}
+
+/* Reset some default browser styles */
+html, body, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the header */
+header {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+    color: white;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav :hover{
+    color: aqua;
+}
+
+/* Style the main content */
+.fuel-price-management {
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Style the filters and table */
+.filters {
+    margin-bottom: 20px;
+}
+
+.filters select,
+.filters input[type="date"],
+.filters button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Style the add price entry section */
+.add-price-entry {
+    margin-top: 20px;
+}
+
+.add-price-entry h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.add-price-entry select,
+.add-price-entry input[type="text"],
+.add-price-entry input[type="date"],
+.add-price-entry button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+/* Style the pagination */
+.pagination {
+    margin-top: 20px;
+}
+
+/* Style the footer */
+footer {
+    clear: both; /* Add this line to clear floats */
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 0;
+}
+
+#logout-button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #ff3333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+i {
+    color: white;
+}
+
+/* Style the user info section */
+.user-navinfo {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Push user info to the right */
+}
+
+.user-navinfo img {
+    width: 30px; /* Adjust the size of the user icon as needed */
+    height: 30px;
+    margin-right: 10px; /* Add spacing between the icon and the name */
+    border-radius: 50%; /* Makes the image circular */
+    overflow: hidden; /* Ensures the image stays within the circular boundary */
+}
+
+.user-navname {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Style the header */
+
+
+/* Style the feedback page */
+.feedback-page {
+    min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Style the feedback form */
+.feedback-form {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.feedback-form h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.feedback-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.feedback-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.feedback-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+.feedback-form button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Style the feedback list */
+.feedback-list {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.feedback-list h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.feedback-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.feedback-list li {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.feedback-list p {
+    margin: 0;
+}
+
+/* Style the user activity logs page */
+.user-activity-logs {
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Style the filter and search options */
+.filter-options {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-options label {
+    font-weight: bold;
+}
+
+.filter-options select,
+.filter-options input[type="date"],
+.filter-options button,
+.filter-options input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.filter-options button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Style the user activity logs table */
+.activity-logs-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.activity-logs-table th, .activity-logs-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.station-management {
+    padding: 20px;
+}
+
+.add-station-form {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.add-station-form h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.add-station-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-station-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.add-station-form input[type="text"],
+.add-station-form input[type="number"],
+.add-station-form select,
+.add-station-form input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.add-station-form select {
+    appearance: none; /* Remove default select arrow */
+}
+
+.add-station-form button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.station-management h1{
+    text-align: center;
+}
+
+.station-list h2{
+    text-align: center;
+}
+
+.post-form h2{
+    text-align: center;
+}
+
+.fuel-price-management h1{
+    text-align: center;
+}
+
+.add-price-entry h2{
+    text-align: center;
+}
+
+.feedback-page h1{
+    text-align: center;
+}
+
+.feedback-list h2{
+    text-align: center;
+}
+
+.new-profile h1{
+    text-align: center;
+}
+
+.user-activity-logs h1{
+    text-align: center;
+}
+
+.content h2{
+    text-align: center;
+}
