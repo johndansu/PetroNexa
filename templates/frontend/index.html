@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="{% static 'frontend/css/main.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'frontend/js/script.js' %}"></script>
     <title>PetroNexa</title>
 </head>
 <body>
@@ -23,8 +26,12 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:contact' %}">Contact</a></li>
                 </ul>
                 <ul class="navbar-nav auth-links">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:login' %}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:signup' %}">Signup</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'petronexa_app:signup' %}">Signup</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -47,8 +54,8 @@
             <div class="container" data-aos="fade-up" data-aos-delay="100">
     
                 <div class="row gy-4 posts-list">
-                    {% if  post %}
-                    {% for p in post %}
+                    {% if  page %}
+                    {% for p in page %}
                         <div class="col-xl-4 col-md-6">
                             <div class="post-item position-relative h-100">
                 
@@ -79,11 +86,6 @@
                 
                                 </div>
                                 <hr>
-                                <!-- <div class="gas-station-info">
-                                    <div class="rating">Rating: 4.5</div>
-                                    <div class="price">Price: $2.50</div>
-                                    <div class="customer-service">Customer Service: Good</div>
-                                </div> -->
                             </div>
                         </div>    
                     {% endfor%}
@@ -95,13 +97,22 @@
     
             <div class="blog-pagination">
                 <ul class="justify-content-center">
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+                    {% if page.has_previous %}
+                        <li><a href="?page=1">&laquo;&laquo;</a></li>  <!-- First page -->
+                        <li><a href="?page={{ page.previous_page_number }}">&laquo;</a></li>  <!-- Previous page -->
+                    {% endif %}
+                    
+                    {% for i in page.paginator.page_range %}
+                        <li {% if page.number == i %}class="active"{% endif %}><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+                    
+                    {% if page.has_next %}
+                        <li><a href="?page={{ page.next_page_number }}">&raquo;</a></li>  <!-- Next page -->
+                        <li><a href="?page={{ page.paginator.num_pages }}">&raquo;&raquo;</a></li>  <!-- Last page -->
+                    {% endif %}
                 </ul>
-            </div><!-- End blog pagination -->
+            </div>
+            
     
             </div>
         </section><!-- End Blog Section -->
@@ -131,9 +142,7 @@
           // Store gas station data in Local Storage
           localStorage.setItem('gasStations', JSON.stringify(gasStations));
         });
-      </script>
-      
-    <script src="{% static 'frontend/js/script.js' %}"></script>
+    </script>
 
 </body>
 </html>

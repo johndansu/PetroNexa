@@ -9,23 +9,32 @@
 </head>
 <body>
     <div class="signup-container">
-        <form class="signup-form">
+        <form class="signup-form" method="post" action="{% url 'petronexa_app:signup' %}">
+            {% csrf_token %}
             <h2>Sign Up</h2>
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <label for="id_username">Username:</label>
+                <input type="text" id="id_username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <label for="id_first_name">First Name:</label>
+                <input type="text" id="id_first_name" name="first_name" required>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="id_last_name">Last Name:</label>
+                <input type="text" id="id_last_name" name="last_name" required>
             </div>
             <div class="form-group">
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
+                <label for="id_email">Email:</label>
+                <input type="email" id="id_email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password1">Password:</label>
+                <input type="password" id="id_password1" name="password1" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password2">Confirm Password:</label>
+                <input type="password" id="id_password2" name="password2" required>
             </div>
             <button type="submit">Sign Up</button>
             <p>Already have an account? <a href="{% url 'petronexa_app:login' %}">Login here</a></p>

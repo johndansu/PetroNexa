@@ -5,39 +5,83 @@ from petronexa_app.forms import  *
 import json
 from django.views.decorators.csrf import csrf_exempt
 from random import *
+from django.core.mail import *
+from django.contrib.auth import *
+from django.urls import *
+from django.contrib.auth.decorators import *
+from django.contrib.admin.views.decorators import *
+from django.core.paginator import Paginator
+
+
 
 # Create your views here.
 
-def homepage (request):
-    post = Post.objects.all()
-    return render(request, "frontend/index.html", {'post':post})
+def homepage(request):
+    all_posts = Post.objects.all()
+    posts_per_page = 6 
+    paginator = Paginator(all_posts, posts_per_page)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+
+    context = {
+        'page': page,
+    }
+
+    return render(request, 'frontend/index.html', context)
+
 
 def contact(request):
-    return render(request, "frontend/contact.html")
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = f"{email} sent you a message: {form.cleaned_data['message']}"
+
+            # Send email
+            send_mail(
+                subject,
+                message,
+                email,
+                ['dansu.jw@gmail.com'],
+                fail_silently=False,
+            )
+
+            message_obj = ContactMessage(name=name, email=email, subject=subject, message=message)
+            message_obj.save()
+
+            return redirect('petronexa_app:homepage')  # Redirect to a thank you page or homepage
+
+    else:
+        form = ContactForm()
+
+    return render(request, 'frontend/contact.html', {'form': form})
 
 def blog(request, det_id):
-    details = get_object_or_404(Post,id=det_id)
-    comments = Comment.objects.filter(post=det_id).order_by('-created_date')
+    details = get_object_or_404(Post, id=det_id)
+    comments = Comment.objects.filter(post=details).order_by('-created_date')  # Filter comments by the current post
+
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = form.save(commit=False)  
-            comment.details = details
+            comment = form.save(commit=False)
+            comment.post = details  # Assign the comment to the current post
             comment.author = request.user
             comment.save()
-            return redirect('frontend:blog', det_id=blog.det_id)
-            details = {'form': form, 'most_recent': most_recent,}
+            return redirect('frontend:blog', det_id=det_id)  # Use det_id variable here
     else:
         form = CommentForm()
-        
+
     context = {
-        'form' : form,
-        'details':details,
-        'comments':comments,
+        'form': form,
+        'details': details,
+        'comments': comments,
     }
-    
+
     return render(request, "frontend/blog-details.html", context)
 
+@login_required
 def fuelfinder(request):
     # Retrieve all fuel stations (you can modify this query based on your needs)
     fuel_stations = Post.objects.all()
@@ -64,12 +108,22 @@ def fuelfinder(request):
     if customer_service:
         # Filter by customer service
         fuel_stations = fuel_stations.filter(customer_service=customer_service)
+    
+    user_is_not_logged_in = not request.user.is_authenticated
+    if user_is_not_logged_in:
+        return redirect('petronexa_app:login') 
+    else:
+        return render(request, "frontend/fuelfinder.html", {'random': random})
 
-    return render(request, "frontend/fuelfinder.html", {'random': random})
 
-
+@login_required
 @csrf_exempt
 def addstation(request):
+    user_is_not_logged_in = not request.user.is_authenticated
+    
+    if user_is_not_logged_in:
+        return redirect('petronexa_app:login')
+
     if request.method == 'POST':
         form = GasStationForm(request.POST)
         if form.is_valid():
@@ -84,8 +138,50 @@ def addstation(request):
         # Handle GET requests by rendering the form
         form = GasStationForm()  # Create a new form instance
         return render(request, 'frontend/addstation.html', {'form': form})
-def login(request):
-    return render(request, "frontend/login.html")
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('petronexa_app:homepage')
+    else:
+        form = LoginForm()
+    
+    return render(request, 'frontend/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('petronexa_app:homepage'))
+
+@staff_member_required
+def admin(request):
+    if request.user.is_staff:
+        return redirect('admin:index')
+    else:
+        return redirect('petronexa_app:homepage')
+
 
 def signup(request):
-    return render(request, "frontend/signup.html")
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            # Create a new instance of CustomUser
+            user = CustomUser(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                # Set other user attributes as needed
+            )
+            # Set the user's password
+            user.set_password(form.cleaned_data['password'])
+            user.save()  
+            return redirect('petronexa_app:login')  
+    else:
+        form = SignUpForm()
+    return render(request, 'frontend/signup.html', {'form': form})

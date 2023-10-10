@@ -60,4 +60,43 @@ document.addEventListener('DOMContentLoaded', function () {
   displayGasStations();
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const fuelfinderLink = document.querySelector('#fuelfinder-link');
+    const addstationLink = document.querySelector('#addstation-link');
+    const modal = document.getElementById('login-required-modal');
+    const closeBtn = document.querySelector('.close');
+
+    // Function to show the modal
+    function showModal() {
+        modal.style.display = 'block';
+    }
+
+    // Function to hide the modal
+    function hideModal() {
+        modal.style.display = 'none';
+    }
+
+    // Event listener for the fuelfinder link
+    fuelfinderLink.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent the default click behavior
+        showModal();
+    });
+
+    // Event listener for the addstation link
+    addstationLink.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent the default click behavior
+        showModal();
+    });
+
+    // Event listener for the close button
+    closeBtn.addEventListener('click', hideModal);
+
+    // Event listener for clicking outside the modal
+    window.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            hideModal();
+        }
+    });
+});
+
 
