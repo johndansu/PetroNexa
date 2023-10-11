@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const gasStationForm = document.getElementById('gas-station-form');
     const addressInput = document.getElementById('address');
-    const latitudeInput = document.getElementById('latitude');
-    const longitudeInput = document.getElementById('longitude');
     const successMessage = document.getElementById('success-message'); // Get the success message element
 
     // Initialize the Google Maps map
@@ -19,38 +17,28 @@ document.addEventListener('DOMContentLoaded', function () {
     gasStationForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        // Get form values
+        // Get the address input value
         const address = addressInput.value;
-        const latitude = parseFloat(latitudeInput.value);
-        const longitude = parseFloat(longitudeInput.value);
-        const formData = new FormData(gasStationForm);
 
-        // Update map center based on input location
-        map.setCenter({
-            lat: latitude,
-            lng: longitude
+        // Use the Geocoder to convert the address to latitude and longitude
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: address }, function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                const location = results[0].geometry.location;
+
+                // Update the map center based on the converted location
+                map.setCenter(location);
+
+                // Set the latitude and longitude values in the form data
+                gasStationForm.querySelector('input[name="latitude"]').value = location.lat();
+                gasStationForm.querySelector('input[name="longitude"]').value = location.lng();
+
+                // Submit the form
+                gasStationForm.submit();
+            } else {
+                // Handle the case where the address couldn't be geocoded (e.g., display an error message)
+                console.error('Geocoding failed:', status);
+            }
         });
-
-        // Perform form validation here (if needed)
-
-        // Add your logic to submit the form data to a backend API or process it as needed
-        // ...
-
-        // Example using Fetch:
-        fetch('/addstation/', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response from the backend (e.g., display a success message)
-                successMessage.style.display = 'block'; // Show the success message
-                console.log(data.message);
-            })
-            .catch(error => {
-                // Handle errors here (e.g., display an error message)
-                console.error(error);
-            });
-        
     });
 });

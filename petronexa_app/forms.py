@@ -19,12 +19,9 @@ class CommentForm(forms.ModelForm):
 class GasStationForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'address', 'content', 'rating', 'price', 'customer_service', 'featured_image', 'latitude', 'longitude']
+        fields = ['title', 'content', 'rating', 'price', 'customer_service', 'featured_image',]
         widgets = {
-            'latitude': forms.HiddenInput(),
-            'longitude': forms.HiddenInput(),
             'title': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-            'address': forms.HiddenInput(),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5, 'required': True}),
             'price': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
@@ -43,8 +40,6 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label='Password')
 
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField(max_length=254, required=True, help_text='Required. Enter a valid email address.')
-
     class Meta:
-        model = User  # Use the built-in User model
+        model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
