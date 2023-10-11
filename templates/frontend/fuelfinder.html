@@ -60,35 +60,33 @@
               <form method="GET" id="filter-form" action="{% url 'petronexa_app:fuelfinder' %}">
                 <div class="form-group">
                   <label for="search">Name:</label>
-                  <input type="text" id="search" name="search" class="form-control" placeholder="Search by name..." value="{{ request.GET.search }}">
+                  <input type="text" id="search" name="q" class="form-control" placeholder="Search by name..." value="{{ request.GET.search }}">
                 </div>
-                <div class="form-group">
-                  <label for="rating">Rating:</label>
-                  <select id="rating" name="rating" class="form-control">
-                    <option value="0">Any</option>
-                    <option value="1">1 Star</option>
-                    <option value="2">2 Stars</option>
-                    <option value="3">3 Stars</option>
-                    <option value="4">4 Stars</option>
-                    <option value="5">5 Stars</option>
-                    <!-- Add other rating options -->
-                  </select>
+                  <div class="form-group">
+                    <label for="rating">Rating:</label>
+                    <select id="rating" name="rating" class="form-control">
+                        <option value="0-0.9">0-0.9</option>
+                        <option value="1.0-1.9">1.0-1.9</option>
+                        <option value="2.0-2.9">2.0-2.9</option>
+                        <option value="3.0-3.9">3.0-3.9</option>
+                        <option value="4.0-4.9">4.0-4.9</option>
+                        <option value="5.0">5.0</option>
+                    </select>
                 </div>
                 <div class="form-group">
                   <label for="price">Price:</label>
                   <input type="text" id="price" name="price" class="form-control" placeholder="Enter price..." value="{{ request.GET.price }}">
                 </div>
                 <div class="form-group">
-                  <label for="customer_service">Customer Service:</label>
-                  <select id="customer-service" name="customer_service" class="form-control">
-                    <option value="0">Any</option>
-                    <option value="1">Poor</option>
-                    <option value="2">Average</option>
-                    <option value="3">Good</option>
-                    <option value="4">Excellent</option>
-                    <!-- Add other customer service options -->
+                  <label for="customer-service">Customer Service:</label>
+                  <select id="customer-service" name="customer-service" class="form-control">
+                      <option value="0">Any</option>
+                      <option value="1">Bad</option>
+                      <option value="2">Average</option>
+                      <option value="3">Good</option>
+                      <option value="4">Excellent</option>
                   </select>
-                </div>
+              </div>
                 <button type="submit" class="btn btn-primary" id="search">Apply</button>
               </form>
             </div>
@@ -96,45 +94,40 @@
           <div class="col-lg-1">
 
           </div>
-          <div class="col-lg-9">
-            <div class="row gy-6 posts-list">
-              {% for p in random %}
-                  <div class="col-xl-4 col-md-6">
+            <div  id="results" class="col-lg-9">
+              <div class="row gy-6 posts-list">
+                {% if filtered_posts %}
+                  {% for p in filtered_posts %}
+                    <div class="col-xl-4 col-md-6">
                       <div class="post-item position-relative h-100">
-          
-                          <div class="post-img position-relative overflow-hidden" style="height=48%;">
+                        <div class="post-img position-relative overflow-hidden" style="height=48%;">
                           <img src="{{ p.featured_image.url }}" class="img-fluid" alt style="height: 263px;">
                           <span class="post-date">{{ p.published_date }}</span>
+                        </div>
+                        <div class="post-content d-flex flex-column">
+                          <h3 class="post-title gas-station-name">{{ p.title }}</h3>
+                          <div class="meta d-flex align-items-center">
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person"></i> <span class="ps-2">{{ p.author }}</span>
+                            </div>
+                            <span class="px-3 text-black-50">/</span>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-folder2"></i> <span class="ps-2">{{ p.rating }}</span>
+                            </div>
                           </div>
-          
-                          <div class="post-content d-flex flex-column">
-          
-                              <h3 class="post-title gas-station-name">{{p.title}}</h3>
-              
-                              <div class="meta d-flex align-items-center">
-                                  <div class="d-flex align-items-center">
-                                  <i class="bi bi-person"></i> <span class="ps-2">{{p.author}}</span>
-                                  </div>
-                                  <span class="px-3 text-black-50">/</span>
-                                  <div class="d-flex align-items-center">
-                                  <i class="bi bi-folder2"></i> <span class="ps-2">{{p.rating}}</span>
-                                  </div>
-                              </div>
-              
-                              <p class="post-test">{{ p.short_content }}</p>
-              
-                              <hr>
-              
-                              <a href="{% url 'petronexa_app:blog' p.id %}" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-          
-                          </div>
-                          <hr> 
+                          <p class="post-test">{{ p.short_content }}</p>
+                          <hr>
+                          <a href="{% url 'petronexa_app:blog' p.id %}" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+                        </div>
+                        <hr>
                       </div>
-                  </div>  
-                  {% empty %}
+                    </div>
+                  {% endfor %}
+                {% else %}
                   <p>No fuel stations found.</p>
-              {% endfor%}
-            </div><!-- End post list item --> 
+                {% endif %}
+              </div><!-- End post list item -->
+            </div>
           </div>         
         </div>
       </div>

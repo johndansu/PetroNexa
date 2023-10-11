@@ -11,13 +11,14 @@ from django.urls import *
 from django.contrib.auth.decorators import *
 from django.contrib.admin.views.decorators import *
 from django.core.paginator import Paginator
-
+from decimal import Decimal
+from random import sample  
 
 
 # Create your views here.
 
 def homepage(request):
-    all_posts = Post.objects.all()
+    all_posts = Post.objects.all().order_by('-published_date')
     posts_per_page = 6 
     paginator = Paginator(all_posts, posts_per_page)
     page_number = request.GET.get('page')
@@ -81,25 +82,37 @@ def blog(request, det_id):
 
     return render(request, "frontend/blog-details.html", context)
 
+
+
 @login_required
 def fuelfinder(request):
-    # Retrieve all fuel stations (you can modify this query based on your needs)
-    fuel_stations = Post.objects.all()
+    # Retrieve all fuel stations
+    fuel_stations = Post.objects.all()[:3]
 
     # Process user input for filtering
-    search_query = request.GET.get('search', '')
-    rating = request.GET.get('rating', 0)
+    search_query = request.GET.get('q', '')  # Updated to 'q' for name search
+    rating_range = request.GET.get('rating', '')  # Use a string to specify the rating range
     price = request.GET.get('price', '')
-    customer_service = request.GET.get('customer_service', 0)
-    random = sample(list(fuel_stations), 3)
+    customer_service = request.GET.get('customer-service', '')  # Updated to 'customer-service'
+
+    # Apply filters only if search query is empty
+    if not search_query:
+        random_stations = sample(list(fuel_stations), min(3, fuel_stations.count()))
+    else:
+        random_stations = []  # If search query is not empty, don't show random stations
 
     if search_query:
         # Filter by station name (case-insensitive)
         fuel_stations = fuel_stations.filter(title__icontains=search_query)
 
-    if rating:
-        # Filter by rating
-        fuel_stations = fuel_stations.filter(rating=rating)
+    if rating_range:
+        # Split the rating range into minimum and maximum values
+        min_rating, max_rating = rating_range.split('-')
+        min_rating = Decimal(min_rating)
+        max_rating = Decimal(max_rating)
+
+        # Filter by rating range
+        fuel_stations = fuel_stations.filter(rating__gte=min_rating, rating__lt=max_rating + Decimal('0.1'))
 
     if price:
         # Filter by price (you may need to adjust this based on your model field)
@@ -108,16 +121,20 @@ def fuelfinder(request):
     if customer_service:
         # Filter by customer service
         fuel_stations = fuel_stations.filter(customer_service=customer_service)
-    
+
+    if request.headers.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        data = [{'title': station.title, 'rating': str(station.rating), 'customer_service': station.customer_service, 'price': str(station.price)} for station in fuel_stations]
+        return JsonResponse({'fuel_stations': data})
+
     user_is_not_logged_in = not request.user.is_authenticated
     if user_is_not_logged_in:
-        return redirect('petronexa_app:login') 
+        return redirect('petronexa_app:login')
     else:
-        return render(request, "frontend/fuelfinder.html", {'random': random})
+        return render(request, "frontend/fuelfinder.html", {'filtered_posts': fuel_stations})
+
 
 
 @login_required
-@csrf_exempt
 def addstation(request):
     user_is_not_logged_in = not request.user.is_authenticated
     
@@ -125,7 +142,7 @@ def addstation(request):
         return redirect('petronexa_app:login')
 
     if request.method == 'POST':
-        form = GasStationForm(request.POST)
+        form = GasStationForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user  # Set the author to the currently logged-in user
@@ -170,17 +187,8 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            # Create a new instance of CustomUser
-            user = CustomUser(
-                username=form.cleaned_data['username'],
-                email=form.cleaned_data['email'],
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                # Set other user attributes as needed
-            )
-            # Set the user's password
-            user.set_password(form.cleaned_data['password'])
-            user.save()  
+            user = form.save()
+            login(request, user)  # Log the user in after registration
             return redirect('petronexa_app:login')  
     else:
         form = SignUpForm()

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'frontend/css/main.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBFSovkN2mnG2GMDoXg8hKElAdNUFnnd0&libraries=places"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <title>Add Gas Station</title>
 </head>
 <body>
@@ -70,6 +72,7 @@
                                         <div id="map"></div>
                                     </div>
                                 </div>
+                                
                                 {% comment %} <div class="form-group">
                                     <label for="name">Name:</label>
                                     <input type="text" id="name" class="form-control" required>
@@ -109,6 +112,8 @@
                                     <label for="image">Image:</label>
                                     <input type="file" id="image" class="form-control-file" accept="image/*" required>
                                 </div>                {% endcomment %}
+                                
+
                                 <button type="submit" class="btn btn-primary">Add Gas Station</button>
                             </form>
                         </div>
