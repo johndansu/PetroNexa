@@ -15,15 +15,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const queryString = `?q=${searchQuery}&rating=${rating}&price=${price}&customer-service=${customerService}`;
 
         // Fetch filtered results using AJAX
-        fetch(`/fuelfinder/${queryString}`)
-            .then(response => response.json())
-            .then(data => {
-                // Update the results container with new data
-                displayGasStations(data.fuel_stations);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+        fetch(`/fuelfinder/${queryString}`, {
+            headers: {
+                'Accept': 'application/json',  // Specify that you expect JSON
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the results container with new data
+            displayGasStations(data.fuel_stations);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
     });
 
     // Function to display gas stations in the results section

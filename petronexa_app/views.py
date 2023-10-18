@@ -86,20 +86,14 @@ def blog(request, det_id):
 
 @login_required
 def fuelfinder(request):
-    # Retrieve all fuel stations
-    fuel_stations = Post.objects.all()[:3]
-
     # Process user input for filtering
     search_query = request.GET.get('q', '')  # Updated to 'q' for name search
     rating_range = request.GET.get('rating', '')  # Use a string to specify the rating range
     price = request.GET.get('price', '')
     customer_service = request.GET.get('customer-service', '')  # Updated to 'customer-service'
 
-    # Apply filters only if search query is empty
-    if not search_query:
-        random_stations = sample(list(fuel_stations), min(3, fuel_stations.count()))
-    else:
-        random_stations = []  # If search query is not empty, don't show random stations
+    # Retrieve all fuel stations
+    fuel_stations = Post.objects.all()
 
     if search_query:
         # Filter by station name (case-insensitive)
@@ -122,16 +116,14 @@ def fuelfinder(request):
         # Filter by customer service
         fuel_stations = fuel_stations.filter(customer_service=customer_service)
 
-    if request.headers.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-        data = [{'title': station.title, 'rating': str(station.rating), 'customer_service': station.customer_service, 'price': str(station.price)} for station in fuel_stations]
-        return JsonResponse({'fuel_stations': data})
+    # Slice the filtered query set
+    fuel_stations = fuel_stations[:3]
 
     user_is_not_logged_in = not request.user.is_authenticated
     if user_is_not_logged_in:
         return redirect('petronexa_app:login')
     else:
         return render(request, "frontend/fuelfinder.html", {'filtered_posts': fuel_stations})
-
 
 
 @login_required

@@ -86,7 +86,7 @@
                       <option value="3">Good</option>
                       <option value="4">Excellent</option>
                   </select>
-              </div>
+                </div>
                 <button type="submit" class="btn btn-primary" id="search">Apply</button>
               </form>
             </div>
@@ -141,7 +141,7 @@
       </div>
     </footer>
 
-    <script>
+    {% comment %} <script>
       document.addEventListener('DOMContentLoaded', function () {
         const filterForm = document.getElementById('filter-form');
         const resultsContainer = document.getElementById('results');
@@ -195,10 +195,10 @@
           });
         }
       });
-    </script>
+    </script> {% endcomment %}
 
-    <script src="{% static 'frontend/js/script.js' %}"></script>
-    <script src="{% static 'frontend/js/fuelfinder.js' %}"></script>
+    {% comment %} <script src="{% static 'frontend/js/script.js' %}"></script> {% endcomment %}
+    {% comment %} <script src="{% static 'frontend/js/fuelfinder.js' %}"></script> {% endcomment %}
   </body>
 
   </html>
