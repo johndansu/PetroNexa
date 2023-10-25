@@ -61,23 +61,27 @@ def contact(request):
 
 def blog(request, det_id):
     details = get_object_or_404(Post, id=det_id)
-    comments = Comment.objects.filter(post=details).order_by('-created_date')  # Filter comments by the current post
+    comments = Comment.objects.filter(post=details).select_related('author__user').order_by('-created_date')
+  # Filter comments by the current post
 
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = details  # Assign the comment to the current post
-            comment.author = request.user
+            comment.author = UserProfile.objects.get(user=request.user)
             comment.save()
-            return redirect('frontend:blog', det_id=det_id)  # Use det_id variable here
+            details = {'form': form,}
+            # comment.author.increment_review_count()
+            return redirect('petronexa_app:blog', det_id=det_id)  # Use det_id variable here
     else:
         form = CommentForm()
 
     context = {
         'form': form,
         'details': details,
-        'comments': comments,
+        'comm': comments,
+        'sipst':details,
     }
 
     return render(request, "frontend/blog-details.html", context)

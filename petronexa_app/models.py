@@ -2,6 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext as _
 
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_image = models.ImageField(upload_to='profile_images/')
+
+    def __str__(self):
+        return self.user.username
+
 class Post(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -31,14 +39,14 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    comment_content = models.TextField()
     rating = models.IntegerField(default=0, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     review_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f"Comment by {self.author.username} on {self.post.title}"
+        return f"Comment by {self.author.user} on {self.post.title}"
 
     def increment_review_count(self):
         self.review_count += 1
