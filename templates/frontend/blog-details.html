@@ -69,10 +69,10 @@
                     {% endif %}
                     <!-- Ratings Section -->
                     <section class="ratings">
-                        <h2>Customer Ratings and Reviews</h2>
+                        <h2>Customer Reviews</h2>
                         <div class="rating-summary">
                             <div class="average-rating">
-                                <h3>Average Rating</h3>
+                                {% comment %} <h3>Average Rating</h3>
                                 <div class="rating-stars">
                                     <span class="star filled"></span>
                                     <span class="star filled"></span>
@@ -80,7 +80,7 @@
                                     <span class="star"></span>
                                 </div>
                                 <p class="rating-value">{{ details.rating }}</p>
-                            </div>
+                            </div> {% endcomment %}
 
 
                         </div>
@@ -110,13 +110,15 @@
                         {% if user.is_authenticated %}
                         {% if sipst %}
                         <div class="write-review">
-                            <h3>Write a Review</h3>
-                            <p>Share your experience with us and help others make informed decisions.</p>
+                            {% comment %} <h3>Write a Review</h3>
+                            <p>Share your experience with us and help others make informed decisions.</p> {% endcomment %}
 
                             <form method="post">
                                 {% csrf_token %}
                                 {{ form.as_p }}
-                                <button class="btn" type="submit">Submit Review</button>
+                                <div style="display: flex; justify-content: center; align-items: center; height: 10vh;">
+                                    <button class="btn" type="submit" style="background-color: #007BFF; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Submit Review</button>
+                                </div>
                             </form>
                             {% if form.errors %}
                             <div class="alert alert-danger">

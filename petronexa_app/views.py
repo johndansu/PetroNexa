@@ -103,7 +103,7 @@ def fuelfinder(request):
         # Filter by station name (case-insensitive)
         fuel_stations = fuel_stations.filter(title__icontains=search_query)
 
-    if rating_range:
+    elif rating_range:
         # Split the rating range into minimum and maximum values
         min_rating, max_rating = rating_range.split('-')
         min_rating = Decimal(min_rating)
@@ -112,11 +112,11 @@ def fuelfinder(request):
         # Filter by rating range
         fuel_stations = fuel_stations.filter(rating__gte=min_rating, rating__lt=max_rating + Decimal('0.1'))
 
-    if price:
+    elif price:
         # Filter by price (you may need to adjust this based on your model field)
         fuel_stations = fuel_stations.filter(price=price)
 
-    if customer_service:
+    elif customer_service:
         # Filter by customer service
         fuel_stations = fuel_stations.filter(customer_service=customer_service)
 
