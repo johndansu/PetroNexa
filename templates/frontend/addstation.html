@@ -59,8 +59,8 @@
                             <h2>Add Gas Station</h2>
                         </div>
                         <div class="card-body">
-                            <form id="gas-station-form" method="post" action="./" enctype="multipart/form-data">
-                                {% csrf_token %}
+                            <form id="gas-station-form" method="POST" action="{% url 'petronexa_app:addstation' %}" enctype="multipart/form-data">
+                              
                                 {{ form.as_p }}
                                 <div class="form-group">
                                     <label for="address">Address:</label>
@@ -113,7 +113,7 @@
                                     <input type="file" id="image" class="form-control-file" accept="image/*" required>
                                 </div>                {% endcomment %}
                                 
-
+                                {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">Add Gas Station</button>
                             </form>
                         </div>

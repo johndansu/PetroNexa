@@ -19,7 +19,7 @@ class Post(models.Model):
     published_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     featured_image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
-    map = models.URLField()
+    map_url = models.URLField()
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     customer_service = models.CharField(

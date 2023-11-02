@@ -151,7 +151,7 @@ def addstation(request):
         # Handle GET requests by rendering the form
         form = GasStationForm()  # Create a new form instance
         return render(request, 'frontend/addstation.html', {'form': form})
-
+    
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
